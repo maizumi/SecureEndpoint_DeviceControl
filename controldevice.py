@@ -1,9 +1,7 @@
-
-https://visibility.apjc.amp.cisco.com/iroh/oauth2/index.html#/
-
-
 import requests
+import json
 
+base_url = "https://api.apjc.amp.cisco.com/v3/"
 url = "https://visibility.apjc.amp.cisco.com/iroh/oauth2/token"
 
 payload = "grant_type=client_credentials"
@@ -24,7 +22,7 @@ accesstoken = response.json()["access_token"]
 
 print(accesstoken)
 
-url2 = "https://api.apjc.amp.cisco.com/v3/access_tokens"
+url2 = base_url+"access_tokens"
 
 header4endpoint = {
     "Authorization": "Bearer " + accesstoken
@@ -36,8 +34,7 @@ print(response_accesstoken.json())
 EndpointAccessToken = response_accesstoken.json()["access_token"]
 print(EndpointAccessToken)
 
-
-url3 = "https://api.apjc.amp.cisco.com/v3/organizations?size=10"
+url3 = base_url+"organizations?size=10"
 
 header4org = {
     "Authorization": "Bearer " + EndpointAccessToken
@@ -46,7 +43,13 @@ header4org = {
 response_org = requests.request("GET", url3, headers=header4org)
 print(response_org.json())
 
+orgData = response_org.json() 
 
+print(orgData["data"][0]["organizationIdentifier"])
+orgID = orgData["data"][0]["organizationIdentifier"]
 
+url4 = base_url+"organizations/"+orgID+"/device_control/configurations?size=10"
+response_devices = requests.request("GET", url4, headers=header4org)
 
-
+print(response_devices)
+    
