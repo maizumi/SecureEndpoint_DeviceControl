@@ -37,6 +37,14 @@ EndpointAccessToken = response_accesstoken.json()["access_token"]
 print(EndpointAccessToken)
 
 
+url3 = "https://api.apjc.amp.cisco.com/v3/organizations?size=10"
+
+header4org = {
+    "Authorization": "Bearer " + EndpointAccessToken
+    }
+
+response_org = requests.request("GET", url3, headers=header4org)
+print(response_org.json())
 
 
 
