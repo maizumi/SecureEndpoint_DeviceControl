@@ -1,3 +1,7 @@
+
+https://visibility.apjc.amp.cisco.com/iroh/oauth2/index.html#/
+
+
 import requests
 import json
 
@@ -51,5 +55,75 @@ orgID = orgData["data"][0]["organizationIdentifier"]
 url4 = base_url+"organizations/"+orgID+"/device_control/configurations?size=10"
 response_devices = requests.request("GET", url4, headers=header4org)
 
-print(response_devices)
+print(response_devices.text)
+configGuidData = response_devices.json() 
+configGuid = configGuidData["data"][0]["guid"]
+
+
+url5 = base_url+"organizations/"+orgID+"/device_control/configurations"
+
+
+payload2 = {
+  "configuration": {
+    "name": "New Configuration",
+    "baseRule": {
+      "controlType": "block",
+      "notificationType": "never"
+    },
+    "exceptionRules": [
+      {
+        "order": 1,
+        "controlType": "read_only",
+        "notificationType": "inherit_from_base_rule",
+        "quantifier": "any",
+        "ruleExpressions": [
+          {
+            "identifier": "product_name",
+            "operator": "not_equals",
+            "value": "SDX"
+          },
+          {
+            "identifier": "instance_id",
+            "operator": "equals",
+            "value": "USB\\VID_1C4F&PID_0002\\5&2eab04ab&0&1"
+          }
+        ]
+      }
+    ]
+  }
+}
     
+json_object = json.dumps(payload2)
+    
+header4device = {
+    "Authorization": "Bearer " + EndpointAccessToken,
+    'content-type': "application/json",
+    'accept': "application/json"
+    }
+
+response_devices = requests.request("POST", url5, data=json_object, headers=header4device)
+
+print(response_devices.text)
+
+url6 = base_url+"organizations/"+orgID+"/device_control/configurations/"+configGuid+"/rules"
+
+payload3 = {
+  "controlType": "block",
+  "notificationType": "always",
+  "order": 1,
+  "quantifier": "all",
+  "displayName": "string",
+  "ruleExpressions": [
+    {
+      "identifier": "instance_id",
+      "operator": "equals",
+      "value": "string"
+    }
+  ]
+}
+
+json_object3 = json.dumps(payload3)
+json3 = json.loads(json_object3)
+
+
+response_rules = requests.request("POST", url6, data=json3, headers=header4device)
