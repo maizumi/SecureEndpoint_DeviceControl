@@ -127,3 +127,34 @@ json3 = json.loads(json_object3)
 
 
 response_rules = requests.request("POST", url6, data=json3, headers=header4device)
+
+
+
+
+
+
+
+
+
+
+
+result = []
+with open('/Users/maizumi/Documents/15.Technology/Programming/SecureEndpoint/rules.csv', encoding='utf-8-sig') as f:
+	reader = csv.DictReader(f)
+	for r in reader:
+		result.append({
+			"controlType": r["controlType"],
+			"notificationType": r["notificationType"],
+			"order": r["order"],
+			"quantifier": r["quantifier"],
+			"displayName": r["displayName"],
+			"ruleExpressions": [
+			  {
+			    "identifier": "instance_id",
+			    "operator": "equals",
+			    "value": "string"
+			    }
+			]
+		})
+		
+json_result = json.dumps(result)
