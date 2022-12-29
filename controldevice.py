@@ -91,10 +91,11 @@ with open('/Users/maizumi/Documents/15.Technology/Programming/SecureEndpoint/rul
 			    }
 			]
 		})
-		#print(result)
 		json_result = json.dumps(result)
 		lst_str = str(json_result)[1:-1]
 		response_rules = requests.request("POST", url6, data=lst_str, headers=header4device)
+		print(response_rules)
+		time.sleep(1)
 		result.clear()
 	
 
