@@ -71,6 +71,7 @@ header4device = {
     'accept': "application/json"
     }
 
+
 result = []
 with open('/Users/maizumi/Documents/15.Technology/Programming/SecureEndpoint/rules.csv', encoding='utf-8-sig') as f:
 	reader = csv.DictReader(f)
@@ -90,15 +91,12 @@ with open('/Users/maizumi/Documents/15.Technology/Programming/SecureEndpoint/rul
 			    }
 			]
 		})
-
-json_result = json.dumps(result)
-lst_str = str(json_result)[1:-1]
-
-print(lst_str)
-
-response_rules = requests.request("POST", url6, data=lst_str, headers=header4device)
-
-print(response_rules.text)
+		#print(result)
+		json_result = json.dumps(result)
+		lst_str = str(json_result)[1:-1]
+		response_rules = requests.request("POST", url6, data=lst_str, headers=header4device)
+		result.clear()
+	
 
 
 
