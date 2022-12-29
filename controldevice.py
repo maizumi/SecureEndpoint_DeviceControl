@@ -1,9 +1,12 @@
-
-https://visibility.apjc.amp.cisco.com/iroh/oauth2/index.html#/
-
-
 import requests
+import csv
 import json
+from requests.auth import HTTPBasicAuth
+from getpass import getpass
+import os
+from flask import Flask, render_template, request, redirect, url_for, send_from_directory, session
+from werkzeug.utils import secure_filename
+
 
 base_url = "https://api.apjc.amp.cisco.com/v3/"
 url = "https://visibility.apjc.amp.cisco.com/iroh/oauth2/token"
@@ -14,7 +17,6 @@ headers = {
     'accept': "application/json",
     'authorization': "Basic Y2xpZW50LWYwYmNiNWRiLWE5OWUtNGJkYy04YTQ3LWQwOGE1ZDhlOGFiYTpKdjZjakZZTlFuaTJPRzlzcjdJRkhxeFoyX2lINmNlUENOTkVCV3gycG1zVjZBbTZaeHpUWFE=",
     'cache-control': "no-cache",
-    'postman-token': "4e200843-4f90-2f44-962e-5a3b6fe455f8"
     }
 
 response = requests.request("POST", url, data=payload, headers=headers)
@@ -58,103 +60,46 @@ response_devices = requests.request("GET", url4, headers=header4org)
 print(response_devices.text)
 configGuidData = response_devices.json() 
 configGuid = configGuidData["data"][0]["guid"]
+#Management > Device Control のNameでアルファベット順で上記[data]と[guid]番号が変わるので、予め追加したいDeviceControl Config画面で何番目のconfigに追加したいか確認してから番号を変更・入力
+
+url6 = base_url+"organizations/"+orgID+"/device_control/configurations/"+configGuid+"/rules"
 
 
-url5 = base_url+"organizations/"+orgID+"/device_control/configurations"
-
-
-payload2 = {
-  "configuration": {
-    "name": "New Configuration",
-    "baseRule": {
-      "controlType": "block",
-      "notificationType": "never"
-    },
-    "exceptionRules": [
-      {
-        "order": 1,
-        "controlType": "read_only",
-        "notificationType": "inherit_from_base_rule",
-        "quantifier": "any",
-        "ruleExpressions": [
-          {
-            "identifier": "product_name",
-            "operator": "not_equals",
-            "value": "SDX"
-          },
-          {
-            "identifier": "instance_id",
-            "operator": "equals",
-            "value": "USB\\VID_1C4F&PID_0002\\5&2eab04ab&0&1"
-          }
-        ]
-      }
-    ]
-  }
-}
-    
-json_object = json.dumps(payload2)
-    
 header4device = {
     "Authorization": "Bearer " + EndpointAccessToken,
     'content-type': "application/json",
     'accept': "application/json"
     }
 
-response_devices = requests.request("POST", url5, data=json_object, headers=header4device)
-
-print(response_devices.text)
-
-url6 = base_url+"organizations/"+orgID+"/device_control/configurations/"+configGuid+"/rules"
-
-payload3 = {
-  "controlType": "block",
-  "notificationType": "always",
-  "order": 1,
-  "quantifier": "all",
-  "displayName": "string",
-  "ruleExpressions": [
-    {
-      "identifier": "instance_id",
-      "operator": "equals",
-      "value": "string"
-    }
-  ]
-}
-
-json_object3 = json.dumps(payload3)
-json3 = json.loads(json_object3)
-
-
-response_rules = requests.request("POST", url6, data=json3, headers=header4device)
-
-
-
-
-
-
-
-
-
-
-
 result = []
 with open('/Users/maizumi/Documents/15.Technology/Programming/SecureEndpoint/rules.csv', encoding='utf-8-sig') as f:
 	reader = csv.DictReader(f)
 	for r in reader:
+		orderNum = int(r['order'])
 		result.append({
 			"controlType": r["controlType"],
 			"notificationType": r["notificationType"],
-			"order": r["order"],
+			"order": orderNum,
 			"quantifier": r["quantifier"],
 			"displayName": r["displayName"],
 			"ruleExpressions": [
 			  {
-			    "identifier": "instance_id",
-			    "operator": "equals",
-			    "value": "string"
+			    "identifier": r["identifier"],
+			    "operator": r["operator"],
+			    "value": r["value"]
 			    }
 			]
 		})
-		
+
 json_result = json.dumps(result)
+lst_str = str(json_result)[1:-1]
+
+print(lst_str)
+
+response_rules = requests.request("POST", url6, data=lst_str, headers=header4device)
+
+print(response_rules.text)
+
+
+
+
