@@ -70,7 +70,7 @@ result = []
 rulecount = 1
 
 #with open("")にcsvファイルのpathを記入
-with open('/Users/maizumi/Documents/15.Technology/Programming/SecureEndpoint/rules.csv', encoding='utf-8-sig') as f:
+with open('/Users/xxx/rules.csv', encoding='utf-8-sig') as f:
 	reader = csv.DictReader(f)
 	for r in reader:
 		orderNum = int(r['order'])
