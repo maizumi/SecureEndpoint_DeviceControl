@@ -20,4 +20,12 @@ URI information in "Getting Started" section in above document.
   1. Generate SecureX API Client ID and password.<br>
   2. encode SecureX API Client ID and password to Base64 format (please find more infomation in script. I mentioned this at authentication code).<br>
   3. You must be added Device Control Configuration before using this script. Because this script is just adding rules and not including configuring Device Control Congiguration. For adding new Configuration, go to Secure Endpoint > Management > Device Control and Click "New Configuration" in upper right corner of the page.<br>
+  4. using sample csv file (named rule.csv), replace information what you'd like to add as device control rules.
  
+<h3>[Steps using script]</h3>
+  1. replace credentials for authentication (script file line 14)
+  <br>
+  2. replace csv file path (script file line 73)
+  <br>
+  3. excute python script and if any of rules got an error, then you see which row in csv.file has unacceptable value
+  <br>
