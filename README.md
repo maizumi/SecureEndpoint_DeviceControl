@@ -8,13 +8,16 @@ Please find information for preparation for Secure Endpoint API v3 in "Authentic
  > https://developer.cisco.com/docs/secure-endpoint/#!introduction
 
 This script is using "Device Control Rules" POST API ( Secure Endpoint API V3 > API Reference > Device Control Rules > POST)
+<br>
 
+<H3>[NOTE]</H3>
+URI for Secure Endpoint API V3 is varied according to region. This script is using "APJC" region URI, however if you're using different region, please find <br>
+URI information in "Getting Started" section in above document.
+<br>
+<br>
+<h3>[What you need to do before using this API script]</h3>
 
-<NOTE>
-URI for Secure Endpoint API V3 is varied according to region. This script is using "APJC" region URI, however if you're using different region, please find URI information in "Getting Started" section in above document.
-  
-<What you need to do before using this API script>
-  1. Generate SecureX API Client ID and password.
-  2. encode SecureX API Client ID and password to Base64 format (please find more infomation in script. I mentioned this at authentication code).
-  3. You must be added Device Control Configuration before using this script. Because this script is just adding rules and not including configuring Device Control Congiguration. For adding new Configuration, go to Secure Endpoint > Management > Device Control and Click "New Configuration" in upper right corner of the page.
+  1. Generate SecureX API Client ID and password.<br>
+  2. encode SecureX API Client ID and password to Base64 format (please find more infomation in script. I mentioned this at authentication code).<br>
+  3. You must be added Device Control Configuration before using this script. Because this script is just adding rules and not including configuring Device Control Congiguration. For adding new Configuration, go to Secure Endpoint > Management > Device Control and Click "New Configuration" in upper right corner of the page.<br>
  
