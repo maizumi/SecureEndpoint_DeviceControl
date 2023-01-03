@@ -17,10 +17,14 @@ URI information in "Getting Started" section in above document.
 <br>
 <h3>[What you need to do before using this API script]</h3>
 
-  1. Generate SecureX API Client ID and password.<br>
-  2. encode SecureX API Client ID and password to Base64 format (please find more infomation in script. I mentioned this at authentication code).<br>
+  1. Generate SecureX API Client ID and password.<br> https://developer.cisco.com/docs/secure-endpoint/#!authentication/2-register-securex-api-client <br>
+  2. encode SecureX API Client ID and password to Base64 format (please find more infomation in script. I mentioned this at authentication code).<br> google search base64 encoding or use "base64" command on Linux.
   3. You must be added Device Control Configuration before using this script. Because this script is just adding rules and not including configuring Device Control Congiguration. For adding new Configuration, go to Secure Endpoint > Management > Device Control and Click "New Configuration" in upper right corner of the page.<br>
-  4. using sample csv file (named rule.csv), replace information what you'd like to add as device control rules.
+  4. using sample csv file (named rule.csv), replace information what you'd like to add as device control rules. <br>
+  [caution] <br>
+ "vendor_name" and "device_id" must have at least one "*" somewhere in value and you can only choose "like" or "not_like" as "Operator".(example: *sample, samp*le, sample*) <br>
+ "vendor_id" and "product_id" must be 4 digit number and you can only choose "like" or "not_like" as "Operator".
+ 
  
 <h3>[Steps using script]</h3>
   1. replace credentials for authentication (script file line 14)
