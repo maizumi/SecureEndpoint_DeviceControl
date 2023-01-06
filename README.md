@@ -1,3 +1,6 @@
+<h2>Youtube video</h2> <br>
+
+[![Watch the video](https://img.youtube.com/vi/eeTWs4_mwTA/0.jpg)](https://youtu.be/eeTWs4_mwTA)
 
 
 This Python script is for adding hundreds of rules into Secure Endpoint "Device Control" Configuration.
