@@ -48,6 +48,9 @@ response_org = requests.request("GET", url3, headers=header4org)
 orgData = response_org.json() 
 
 #print(orgData["data"][0]["organizationIdentifier"])
+
+#Secure Endpointの管理画面で”Accounts > Organization Settings > SecureX”にある”SecureXのOrganization”がここでいうOrgIDに格納される（自身のログインIDに紐付いてる組織が複数ある場合はここで一旦Printして表示をみて何番目の組織のSecureXni紐付いてるSecure Endpointかを確認してから["0"]の番号を変更）
+#print(orgData["data"][0]["organizationIdentifier"])
 orgID = orgData["data"][0]["organizationIdentifier"]
 
 url4 = base_url+"organizations/"+orgID+"/device_control/configurations?size=10"
